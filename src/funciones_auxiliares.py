@@ -19,12 +19,30 @@ def getText(linea):
     return dato.strip()
 
 def get_columnas(columnas, max, dias):
+    """Devuelve una sublista de la lista columnas dependiendo de los dias del mes
+
+    Args:
+        columnas (list): lista de las filas de la sopa
+        max (int): indice base para calcular la sublista
+        dias (int): dias del mes que se está buscando en la lista columnas
+
+    Returns:
+        int, list: devuelve el próximo máximo y la sublista deseada
+    """
     max_final=max+1+((dias+1)*3)
     lista_aux=columnas[max+1:max_final]
     return max_final, lista_aux
 
 
 def df_datos_mes(sopa):
+    """Se encarga de extraer los datos deseados y crear un dataframe de un meses de un municipio
+
+    Args:
+        sopa (bs4.element): sopa obtenida a partir del html
+
+    Returns:
+        DataFrame: el DataFrame con todos los datos deseados
+    """
     table = sopa.findAll("table", {"class":"days ng-star-inserted"})
     columnas = table[0].findAll("td")
 
@@ -52,31 +70,11 @@ def df_datos_mes(sopa):
     mes=columnas[8:max1]
     listas.append(mes)
 
+    # temperatura, rocio, humedad, viento, presion
     maxi = max1
     for i in range(5):
         maxi, lista_aux = get_columnas(columnas, maxi, dias)
         listas.append(lista_aux)
-
-
-    # #temperatura
-    # max2, temperaturas = get_columnas(columnas, max1, dias)
-    # listas.append(temperaturas)
-
-    # #rocío
-    # max3, rocio = get_columnas(columnas, max2, dias)
-    # listas.append(rocio)
-
-    # #humedad
-    # max4, humedad = get_columnas(columnas, max3, dias)
-    # listas.append(humedad)
-
-    # #viento
-    # max5, viento = get_columnas(columnas, max4, dias)
-    # listas.append(viento)
-
-    # #presion
-    # max6, presion = get_columnas(columnas, max5, dias)
-    # listas.append(presion)
 
     #precipitacion
     max7=maxi+1+dias+1

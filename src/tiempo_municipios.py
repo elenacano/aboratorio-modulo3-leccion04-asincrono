@@ -91,7 +91,6 @@ async def main():
     
     municipios = fa.get_municipios()
     lista_tareas = []
-    municipios = ["alcobendas", "leganes", "alcorcon", "alpedrete"]
     for munici in municipios:
         lista_tareas.append(pag_mes(munici))
 
