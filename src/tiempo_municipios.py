@@ -98,6 +98,8 @@ async def main():
     lista_df_muni = await asyncio.gather(*lista_tareas)
     df_final = pd.concat(lista_df_muni)
     print(df_final.shape)
+    
+    df_final.reset_index(inplace=True)
     df_final.to_csv("../datos/df_asinc.csv")
 
     fin = time.time()
